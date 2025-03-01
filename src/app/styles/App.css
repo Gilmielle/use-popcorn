@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --spacing: 1px;
+}
+
+.container {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+button {
+  cursor: pointer;
+}
+

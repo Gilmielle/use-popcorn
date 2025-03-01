@@ -1,0 +1,11 @@
+.header.container {
+  padding-block: 16px;
+}
+
+.nav__link.active {
+  background-color: var(--color-violet-500);
+}
+
+.layout__main.container {
+  padding-block: 80px;
+}
