@@ -1,5 +1,5 @@
-import {Film} from "../../api/filmsList.ts";
-import {FixedLengthArray} from "../types.ts";
+import {Film} from "#shared/api/filmsList.ts";
+import {FixedLengthArray} from "#shared/lib/types.ts";
 
 /**
  * Returns film name depending on what is present in data

@@ -1,4 +1,4 @@
-import IconLoading from "../../../../../public/icon-loading.svg?react"
+import IconLoading from "#public/icon-loading.svg?react"
 import "../style.css"
 
 export const Loader = () => {

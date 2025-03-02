@@ -1,5 +1,5 @@
-import {Film} from "../../../shared/api/filmsList.ts";
-import {getFilmDisplayedName} from "../../../shared/lib/utils";
+import {Film} from "#shared/api/filmsList.ts";
+import {getFilmDisplayedName} from "#shared/lib/utils/index.ts";
 
 export const FilmCard = (props: Film) => {
 

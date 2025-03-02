@@ -1,5 +1,5 @@
-import {Film, FilmTypesUi} from "../../../shared/api/filmsList.ts";
-import {getFilmDisplayedName, getFormattedFilmLength} from "../../../shared/lib/utils";
+import {Film, FilmTypesUi} from "#shared/api/filmsList.ts";
+import {getFilmDisplayedName, getFormattedFilmLength} from "#shared/lib/utils/index.ts";
 
 export const FilmCardDetailed = (props: Film) => {
 
@@ -52,12 +52,12 @@ export const FilmCardDetailed = (props: Film) => {
         <img className={"object-cover w-100/100 h-100/100 object-center"} src={props.posterUrl} width={256} height={456} alt={`"Постер для "${getFilmDisplayedName(props)}`}/>
       </div>
       <div className={"flex flex-col gap-16 items-start"}>
-        <p className={"text-xl mb-16"}>
+        <div className={"text-xl mb-16"}>
           <h1 className={"font-bold text-4xl"}>{getFilmDisplayedName(props)}{!!props.year &&` (${props.year})`}</h1>
           {(!!props.nameOriginal || !!props.nameEn) && <p>
             <span className={"text-sm font-light text-gray-400"}>{props.nameOriginal ? props.nameOriginal : props.nameEn}</span>
           </p>}
-        </p>
+        </div>
         {!!props.description && <p className={"mb-32"}>
           <span className={"text-2xl"}>{props.description}</span>
         </p>}

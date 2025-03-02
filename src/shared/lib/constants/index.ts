@@ -2,7 +2,8 @@ import {routePaths} from "./routes.ts";
 
 const API_ENDPOINTS = {
   filmsList: "/films",
-  filmDetails: "/films/"
+  filmDetails: "/films/",
+  filmsListFilter: "/films/filters",
 };
 
 const API_URL = "https://kinopoiskapiunofficial.tech/api/v2.2";

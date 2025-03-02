@@ -1,13 +1,14 @@
 import {useEffect, useState} from 'react'
-import {FilmOrders} from "../shared/api/filmsList.ts";
-import {Pagination} from "../shared/ui/pagination";
+import {FilmOrders} from "#shared/api/filmsList.ts";
+import {Pagination} from "#shared/ui/pagination/index.ts";
 import {createPortal} from "react-dom";
-import {Loader} from "../shared/ui/loader";
-import {FilmCard} from "../entities/filmCard";
+import {Loader} from "#shared/ui/loader/index.ts";
+import {FilmCard} from "#entities/filmCard/index.ts";
 import {generatePath, Link} from "react-router";
-import {routePaths} from "../shared/lib/constants";
-import {useFilms} from "../shared/hooks/useFilms.ts";
-import {Modal} from "../shared/ui/modal";
+import {routePaths} from "#shared/lib/constants/index.ts";
+import {useFilms} from "#shared/hooks/useFilms.ts";
+import {Modal} from "#shared/ui/modal/index.ts";
+import {getFilmsListFilter} from "#shared/api/filmsListFilter.ts";
 
 
 function Home() {
@@ -15,6 +16,10 @@ function Home() {
   // TODO: плюс там же параметры фильтра
   const [ getFilmsParams, setGetFilmsParams ] = useState({ order: FilmOrders.RATING })
   const [ isErrorModalOpen, setIsErrorModalOpen ] = useState(false)
+
+  useEffect(() => {
+    getFilmsListFilter()
+  }, []);
 
   const {
     pages,

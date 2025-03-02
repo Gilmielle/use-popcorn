@@ -1,4 +1,4 @@
-import {routePaths} from "../../../lib/constants";
+import {routePaths} from "#shared/lib/constants/index.ts";
 
 const navList = [
   {

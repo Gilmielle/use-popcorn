@@ -1,6 +1,6 @@
 import ReactModal from 'react-modal';
 import React, {useEffect, useState} from "react";
-import IconClose from "../../../../../public/icon-close.svg?react"
+import IconClose from "#public/icon-close.svg?react"
 import "../style.css"
 
 interface ModalProps {

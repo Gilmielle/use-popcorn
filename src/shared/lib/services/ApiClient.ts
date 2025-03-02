@@ -1,4 +1,4 @@
-import {API_KEY} from '../constants'
+import {API_KEY} from '#shared/lib/constants/index.ts'
 
 type requestMethodsTypes = "GET" | "POST";
 

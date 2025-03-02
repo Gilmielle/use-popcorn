@@ -1,12 +1,14 @@
-import {ApiClient} from "../lib/services/ApiClient.ts";
-import {API_ENDPOINTS} from "../lib/constants";
+import {ApiClient} from "#shared/lib/services/ApiClient.ts";
+import {API_ENDPOINTS} from "#shared/lib/constants/index.ts";
 
 export interface Country {
-  "country": string
+  "country": string,
+  "id"?: number,
 }
 
 export interface Genre {
-  "genre": string
+  "genre": string,
+  "id"?: number,
 }
 
 export enum FilmTypes {

@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {getFilmsListProps, getFilmsLit} from "../api/filmsList.ts";
+import {getFilmsListProps, getFilmsLit} from "#shared/api/filmsList.ts";
 
 export const useFilms = (props: getFilmsListProps) => {
   const [films, setFilms] = useState([])
