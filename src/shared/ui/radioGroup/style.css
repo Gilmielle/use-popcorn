@@ -1,0 +1,168 @@
+.radioGroup {
+  /* Общие стили */
+  --checkerCursor: pointer;
+  --checkerDisplay: flex;
+  --checkerPosition: relative;
+  --checkerUserSelect: none;
+  --checkerPointerEvents: none;
+  --checkerBg: white;
+  --checkerSize: 24px;
+  --checkerBorderColor: var(--checkerHoverBorderColor);
+  --checkerBorderRadius: 100%;
+  --checkerBorderWidth: 1px;
+  --checkerBorderStyle: solid;
+  --checkerTransition: .2s;
+
+  /* Элемент иконки */
+  --checkerIconOpacity: 0;
+  --checkerIconFilter: none;
+  --checkerIconTransform: scale(0) translateZ(0);
+  --checkerIconTransition: .2s;
+  --checkerIconWidth: 35%;
+  --checkerIconHeight: 35%;
+  --checkerIconSize: 75%;
+  --checkerIconBorderRadius: 100%;
+  --checkerIconBg: white;
+
+  /* Элемент подписи */
+  --checkerLabelDisplay: flex;
+  --checkerLabelPadding: 0 0 0 .75em;
+  --checkerLabelColor: currentColor;
+
+
+  /* Модификация :hover */
+  --checkerHoverBg: white;
+  --checkerHoverBorderColor: var(--color-blue-500);
+  --checkerHoverIconOpacity: 0;
+  --checkerHoverIconFilter: invert(1);
+  --checkerHoverIconTransform: var(--checkerCheckedIconTransform);
+
+  /* Модификация :checked */
+  --checkerCheckedBg: var(--color-blue-500);
+  --checkerCheckedBorderColor: var(--color-blue-500);
+  --checkerCheckedIconTransform: scale(1) translateZ(0);
+  --checkerCheckedIconFilter: none;
+  --checkerCheckedIconOpacity: 1;
+
+  /* Модификация :disabled или [disabled] */
+  --checkerDisabledIconFilter: invert(1) grayscale(100%) opacity(15%);
+  --checkerDisabledIconTransform: none;
+  --checkerDisabledCursor: not-allowed;
+  --checkerDisabledBg: var(--color-gray-400);
+  --checkerDisabledBorderColor: var(--color-gray-400);
+  --checkerDisabledIconOpacity: 0;
+  --checkerDisabledLabelColor: var(--color-gray-600);
+
+  max-height: 440px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  margin-left: -6px;
+}
+
+.radioGroup__item {
+  margin-left: 6px;
+}
+
+.radioGroup__itemWrapper {
+  cursor: var(--checkerCursor);
+  display: var(--checkerDisplay);
+  position: var(--checkerPosition);
+  user-select: var(--checkerUserSelect);
+  pointer-events: var(--checkerPointerEvents);
+  font-size: 16px;
+  font-weight: 450;
+}
+
+.radioGroup__itemWrapper:hover {
+  --checkerBg: var(--checkerHoverBg);
+  --checkerBorderColor: var(--checkerHoverBorderColor);
+  --checkerIconOpacity: var(--checkerHoverIconOpacity);
+  --checkerIconFilter: var(--checkerHoverIconFilter);
+  --checkerIconTransform: var(--checkerHoverIconTransform);
+}
+.radioGroup__itemWrapper:hover .radioGroup__itemEmulator {
+  box-shadow: 0 0 0 4px var(--color-blue-300);
+}
+
+.radioGroup__itemInput {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0 !important;
+  border: 0 !important;
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden;
+  left: -1px;
+}
+
+.radioGroup__itemInput:checked ~ .radioGroup__itemEmulator {
+  --checkerBg: var(--checkerCheckedBg);
+  --checkerBorderColor: var(--checkerCheckedBorderColor);
+  --checkerIconTransform: var(--checkerCheckedIconTransform);
+  --checkerIconFilter: var(--checkerCheckedIconFilter);
+  --checkerIconOpacity: var(--checkerCheckedIconOpacity);
+}
+
+.radioGroup__itemInput:checked[disabled] ~ .radioGroup__itemEmulator {
+  --checkerIconFilter: var(--checkerDisabledIconFilter);
+}
+
+.radioGroup__itemInput:checked[disabled] ~ .radioGroup__itemEmulator,
+.radioGroup__itemInput[disabled] ~ .radioGroup__itemEmulator {
+  --checkerIconTransform: var(--checkerDisabledIconTransform);
+  --checkerIconFilter: var(--checkerDisabledIconFilter);
+  --checkerCursor: var(--checkerDisabledCursor);
+  --checkerBg: var(--checkerDisabledBg);
+  --checkerBorderColor: var(--checkerDisabledBorderColor);
+}
+
+.radioGroup__itemInput:not(:checked)[disabled] ~ .radioGroup__itemEmulator {
+  --checkerIconOpacity: var(--checkerDisabledIconOpacity);
+}
+
+.radioGroup__itemInput[disabled] ~ .radioGroup__itemEmulator {
+  cursor: var(--checkerDisabledCursor);
+  color: var(--checkerDisabledLabelColor);
+}
+
+.radioGroup__itemEmulator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-shrink: 0;
+  pointer-events: auto;
+  cursor: var(--checkerCursor);
+  width: var(--checkerSize);
+  height: var(--checkerSize);
+  border-radius: var(--checkerBorderRadius);
+  background: var(--checkerBg);
+  border-width: var(--checkerBorderWidth);
+  border-color: var(--checkerBorderColor);
+  border-style: var(--checkerBorderStyle);
+  transition: var(--checkerTransition);
+}
+.radioGroup__itemEmulator::after {
+  content: "";
+  width: var(--checkerIconWidth);
+  height: var(--checkerIconHeight);
+  background: var(--checkerIconBg);
+  filter: var(--checkerIconFilter);
+  transform: var(--checkerIconTransform);
+  opacity: var(--checkerIconOpacity);
+  border-radius: var(--checkerIconBorderRadius);
+  transform-origin: 50% 50%;
+  transition: var(--checkerIconTransition);
+}
+
+.radioGroup__itemLabel {
+  display: var(--checkerLabelDisplay);
+  padding: var(--checkerLabelPadding);
+  color: var(--checkerLabelColor);
+  cursor: var(--checkerCursor);
+  pointer-events: auto;
+  transition: var(--checkerTransition);
+  align-items: center;
+}

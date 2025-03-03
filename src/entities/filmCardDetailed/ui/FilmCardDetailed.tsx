@@ -1,5 +1,6 @@
-import {Film, FilmTypesUi} from "#shared/api/filmsList.ts";
+import {Film} from "#shared/api/filmsList.ts";
 import {getFilmDisplayedName, getFormattedFilmLength} from "#shared/lib/utils/index.ts";
+import {FILM_TYPES} from "#shared/lib/constants/index.ts";
 
 export const FilmCardDetailed = (props: Film) => {
 
@@ -11,7 +12,7 @@ export const FilmCardDetailed = (props: Film) => {
       },
       {
         key: "Категория",
-        value: props.type ? FilmTypesUi[props.type] : "—",
+        value: props.type ? FILM_TYPES[props.type] : "—",
       },
       {
         key: "Слоган",
@@ -24,6 +25,10 @@ export const FilmCardDetailed = (props: Film) => {
       {
         key: "Рейтинг",
         value: props.ratingKinopoisk ? props.ratingKinopoisk : "—",
+      },
+      {
+        key: "Количество голосов",
+        value: props.ratingKinopoiskVoteCount ? props.ratingKinopoiskVoteCount.toLocaleString("ru-RU") : "—",
       },
       {
         key: "Страна",

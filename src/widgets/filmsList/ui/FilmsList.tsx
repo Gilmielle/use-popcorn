@@ -1,14 +1,16 @@
-import {Pagination} from "#shared/ui/pagination/index.ts";
 import {createPortal} from "react-dom";
+import {useContext, useEffect, useState} from "react";
+import {StoreContext} from "#shared/config/storeContext.ts";
+import {StoreType} from "#app/providers/StoreProvider/model/store.ts";
+import {Pagination} from "#shared/ui/pagination/index.ts";
 import {Loader} from "#shared/ui/loader/index.ts";
 import {Modal} from "#shared/ui/modal/index.ts";
-import {useContext, useEffect, useState} from "react";
 import {FilmOrders} from "#shared/api/filmsList.ts";
 import {getFilmsListFilter} from "../api/getFilmsListFilter.ts";
 import {useFilms} from "../lib/useFilms.ts";
 import {FilmCardsList} from "./FilmCardsList.tsx";
-import {StoreContext} from "#shared/config/storeContext.ts";
-import {StoreType} from "#app/providers/StoreProvider/model/store.ts";
+import {FilmsFilter} from "./FilmsFilter.tsx";
+import "../style.css"
 
 export const FilmsList = () => {
   const [ isErrorModalOpen, setIsErrorModalOpen ] = useState(false)
@@ -59,12 +61,12 @@ export const FilmsList = () => {
   }, [ isError ]);
 
   return <div className={"filmsList flex flex-row gap-40"}>
-    <div className={"filmsList__aside"}>
-
+    <div className={"filmsList__aside basis-320 shrink-0"}>
+      <FilmsFilter />
     </div>
-    <div className={"filmsList__content space-y-24"}>
+    <div className={"filmsList__content space-y-24 grow-1"}>
       <FilmCardsList films={filmsList}/>
-      <Pagination totalPages={pages} currentPage={currentPage} onPageClick={onPaginationClick} isLoading={isLoading}/>
+      {pages > 1 && <Pagination totalPages={pages} currentPage={currentPage} onPageClick={onPaginationClick} isLoading={isLoading}/>}
       {isLoading && createPortal(<Loader/>, document.body)}
       {isError && <Modal
         defaultIsOpen={isErrorModalOpen}

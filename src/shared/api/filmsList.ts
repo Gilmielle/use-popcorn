@@ -18,15 +18,6 @@ export enum FilmTypes {
 
 export enum FilmTypesFilter {
   "ALL" = "ALL",
-  "TV_SHOW" = "TV_SHOW",
-}
-
-export enum FilmTypesUi {
-  "VIDEO"  = "Видео",
-  "FILM" = "Фильм",
-  "TV_SERIES" = "Сериал",
-  "MINI_SERIES" = "Мини-сериал",
-  "TV_SHOW" = "ТВ шоу",
 }
 
 export enum FilmOrders {

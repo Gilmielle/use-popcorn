@@ -4,8 +4,8 @@ import {getFilmDisplayedName} from "#shared/lib/utils/index.ts";
 export const FilmCard = (props: Film) => {
 
   return <div className={"rounded-md bg-blue-300 p-16 shadow-md shadow-slate-700"}>
-    <div className={"flex gap-8 text-start"}>
-      <div className={"rounded-md overflow-hidden w-135 h-200"}>
+    <div className={"flex gap-24 text-start"}>
+      <div className={"rounded-md overflow-hidden w-135 h-200 shrink-0"}>
         <img className={"object-cover w-100/100 h-100/100 object-center"} src={props.posterUrlPreview} width={135} height={200} alt={`"Постер для "${getFilmDisplayedName(props)}`}/>
       </div>
       <div className={"flex flex-col gap-8 items-start"}>

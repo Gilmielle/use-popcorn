@@ -9,16 +9,17 @@ interface FilmCardsListProps {
 
 export const FilmCardsList = ({ films }: FilmCardsListProps) => {
 
-  return <>
-    {!!films && !!films?.length && <ul className={"flex flex-row flex-wrap gap-16 justify-between"}>
-      {films.map((film) => {
-        return <li className={"basis-48/100"} key={film.kinopoiskId}>
-          <Link to={generatePath(routePaths.filmDetailed, {filmId: film.kinopoiskId.toString()})}>
-            <FilmCard {...film} />
-          </Link>
-        </li>
-      })}
-    </ul>}
-    {(!films || !films.length) && <p className={"text-3xl underline"}>Films list is empty</p>}
-  </>
+  if(!films || !films.length) {
+    return <p className={"text-3xl text-white"}>Результатов не найдено, попробуйте изменить параметры поиска</p>
+  }
+
+  return <ul className={"flex flex-row flex-wrap gap-16 justify-between"}>
+    {films.map((film) => {
+      return <li className={"basis-48/100"} key={film.kinopoiskId}>
+        <Link to={generatePath(routePaths.filmDetailed, {filmId: film.kinopoiskId.toString()})}>
+          <FilmCard {...film} />
+        </Link>
+      </li>
+    })}
+  </ul>
 }

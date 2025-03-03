@@ -9,6 +9,7 @@ export interface FilmsFilterSlice {
   setGenres: (genresList: Array<Required<Genre>>) => void,
   filterParams: getFilmsListProps,
   setFilterParams: (filterParams: getFilmsListProps) => void,
+  clearFilterParams: () => void,
 }
 
 export const createFilmsFilterSlice: StateCreator<
@@ -42,5 +43,11 @@ export const createFilmsFilterSlice: StateCreator<
         }
       }
     }),
+    clearFilterParams: () => set((state) => {
+      return {
+        ...state,
+        filterParams: {}
+      }
+    })
   }
 }

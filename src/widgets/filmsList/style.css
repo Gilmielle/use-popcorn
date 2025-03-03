@@ -1,0 +1,74 @@
+.filmsList {
+  text-align: start;
+}
+
+.filmsList .filmsList__aside {
+  position: relative;
+}
+
+.filmsList .filmsList__aside .filmsFilter {
+  position: sticky;
+  top: 2rem;
+  background-color: #888888;
+}
+
+.filmsList .filmsList__aside .filmsFilter .chakra-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.filmsList .filmsList__aside .filmsFilter .chakra-accordion .chakra-accordion__button {
+  padding: 10px 16px;
+  border-radius: 6px;
+  background-color: #444444;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filmsList .filmsList__aside .filmsFilter .chakra-accordion .chakra-accordion__panel {
+  padding: 10px 16px;
+  border-radius: 6px;
+  background-color: #C6C6C6;
+}
+
+.filmsList .filmsList__aside .filmsFilter .chakra-accordion .chakra-accordion__icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.filmsList .filmsList__aside .filmsFilter .chakra-accordion .chakra-accordion__icon::before,
+.filmsList .filmsList__aside .filmsFilter .chakra-accordion .chakra-accordion__icon::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 16px;
+  height: 4px;
+  background-color: white;
+  border-radius: 8px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s;
+}
+
+.filmsList .filmsList__aside .filmsFilter .chakra-accordion .chakra-accordion__icon::before {
+  rotate: 45deg;
+  transform: translate(-10px, 6px);
+}
+
+.filmsList .filmsList__aside .filmsFilter .chakra-accordion .chakra-accordion__icon::after {
+  rotate: -45deg;
+  transform: translate(0, -4px);
+}
+
+.filmsList .filmsList__aside .filmsFilter .chakra-accordion .chakra-accordion__button[aria-expanded="true"] .chakra-accordion__icon::before {
+  transform: translate(-4px, 0px);
+}
+
+
+.filmsList .filmsList__aside .filmsFilter .chakra-accordion .chakra-accordion__button[aria-expanded="true"] .chakra-accordion__icon::after {
+  transform: translate(-6px, -10px);
+}
