@@ -17,5 +17,6 @@ export const Header = () => {
         })}
       </ul>
     </nav>
+    <div id={"header-searchbar"}></div>
   </header>
 }

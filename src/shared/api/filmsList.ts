@@ -1,6 +1,3 @@
-import {ApiClient} from "#shared/lib/services/ApiClient.ts";
-import {API_ENDPOINTS} from "#shared/lib/constants/index.ts";
-
 export interface Country {
   "country": string,
   "id"?: number,
@@ -23,8 +20,6 @@ export enum FilmTypesFilter {
   "ALL" = "ALL",
   "TV_SHOW" = "TV_SHOW",
 }
-
-type AllFilmTypes = FilmTypes | FilmTypesFilter;
 
 export enum FilmTypesUi {
   "VIDEO"  = "Видео",
@@ -95,40 +90,5 @@ export interface Film {
   "serial": boolean | null,
   "shortFilm": boolean | null,
   "completed": boolean | null,
-}
-
-interface getFilmsLitResp {
-  items: Array<Film>,
-  total: number,
-  totalPages: number,
-}
-
-export interface getFilmsListProps {
-  countries?: number,
-  genres?: number,
-  order?: FilmOrders,
-  type?: AllFilmTypes,
-  ratingFrom?: number,
-  ratingTo?: number,
-  yearFrom?: number,
-  yearTo?: number,
-  imdbId?: string,
-  keyword?: string,
-  page?: number,
-}
-
-export const getFilmsLit = (props: getFilmsListProps) => {
-  const urlSearchParams = new URLSearchParams(JSON.parse(JSON.stringify(props)))
-
-  return ApiClient.instance.get({
-    url: API_ENDPOINTS.filmsList + "?" + urlSearchParams.toString(),
-  }).then((resp: getFilmsLitResp) => {
-    const { items, total, totalPages } = resp
-    return {
-      items,
-      total,
-      totalPages
-    }
-  })
 }
 

@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {getFilmsListProps, getFilmsLit} from "#shared/api/filmsList.ts";
+import {getFilmsListProps, getFilmsLit} from "../api/getFilmsLit.ts";
 
 export const useFilms = (props: getFilmsListProps) => {
   const [films, setFilms] = useState([])
@@ -7,7 +7,6 @@ export const useFilms = (props: getFilmsListProps) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
-
 
   useEffect(() => {
     setIsLoading(true)
