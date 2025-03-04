@@ -64,6 +64,8 @@ const YEAR_MIN_MAX_VALUES = {
   max: 2100,
 }
 
+const SEARCH_INPUT_NAME = "keyword"
+
 export {
   routePaths,
   API_ENDPOINTS,
@@ -76,5 +78,6 @@ export {
   FILM_TYPE_OPTIONS,
   RATING_VALUES,
   YEAR_VALUES,
-  YEAR_MIN_MAX_VALUES
+  YEAR_MIN_MAX_VALUES,
+  SEARCH_INPUT_NAME,
 }

@@ -11,6 +11,7 @@ import {useFilms} from "../lib/useFilms.ts";
 import {FilmCardsList} from "./FilmCardsList.tsx";
 import {FilmsFilter} from "./FilmsFilter.tsx";
 import "../style.css"
+import {ErrorBoundary} from "react-error-boundary";
 
 export const FilmsList = () => {
   const [ isErrorModalOpen, setIsErrorModalOpen ] = useState(false)
@@ -35,12 +36,12 @@ export const FilmsList = () => {
   } = useFilms(filterParams);
 
   useEffect(() => {
-/*    if(!countries.length || !genres.length) {
+    if(!countries.length || !genres.length) {
       getFilmsListFilter().then((resp) => {
         setCountries(resp.countries)
         setGenres(resp.genres)
       })
-    }*/
+    }
   }, [ countries, genres, setCountries, setGenres ]);
 
   useEffect(() => {
@@ -62,7 +63,9 @@ export const FilmsList = () => {
 
   return <div className={"filmsList flex flex-row gap-40"}>
     <div className={"filmsList__aside basis-320 shrink-0"}>
-      <FilmsFilter />
+      <ErrorBoundary fallback={<p>Here should be filter</p>}>
+        <FilmsFilter />
+      </ErrorBoundary>
     </div>
     <div className={"filmsList__content space-y-24 grow-1"}>
       <FilmCardsList films={filmsList}/>

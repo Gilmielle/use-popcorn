@@ -1,5 +1,5 @@
 import {StoreType} from "#app/providers/StoreProvider/model/store.ts";
-import {useCallback, useContext, useMemo, useRef, useState} from "react";
+import {useCallback, useContext, useEffect, useMemo, useRef, useState} from "react";
 import {StoreContext} from "#shared/config/storeContext.ts";
 import {Accordion, AccordionButton, AccordionItem, AccordionPanel,} from "@chakra-ui/accordion"
 import {RadioGroup} from "#shared/ui/radioGroup/index.ts";
@@ -13,13 +13,16 @@ import Select from "react-select";
 import {
   FILTER_RANGE_SLIDER_NAMES,
   FILTER_SELECT_NAMES,
-  RATING_VALUES, YEAR_MIN_MAX_VALUES,
+  RATING_VALUES, SEARCH_INPUT_NAME, YEAR_MIN_MAX_VALUES,
   YEAR_VALUES
 } from "#shared/lib/constants/index.ts";
 import {RangeSlider} from "#shared/ui/rangeSlider/index.ts";
 import {rangeSliderNames} from "#shared/ui/rangeSlider/model/types.ts";
 import {getDebouncedFn} from "#shared/lib/utils/index.ts";
 import {filmsRatingKeys, filmsYearKeys} from "#shared/api/filmsList.ts";
+import {createPortal} from "react-dom";
+import {Searchbar} from "#shared/ui/searchbar/index.ts";
+import {ErrorBoundary} from "react-error-boundary";
 
 export const FilmsFilter = () => {
   const store: StoreType = useContext(StoreContext);
@@ -30,7 +33,7 @@ export const FilmsFilter = () => {
     setFilterParams,
     clearFilterParams,
   } = store;
-
+  const searchbarContainerRef = useRef(document.getElementById("header-searchbar"));
   const accordionData = useMemo(() => getAdaptedAccordionData(genres, countries), [ genres, countries ])
 
   const orderSelectOptions = useMemo(() => getAdaptedOrderSelectOptions(filterParams), [])
@@ -54,6 +57,10 @@ export const FilmsFilter = () => {
       max: Number(filterParams[filmsYearKeys.yearTo] ? filterParams[filmsYearKeys.yearTo] : YEAR_VALUES.max),
     }
   }, [filterParams])
+
+  useEffect(() => {
+    searchbarContainerRef.current = document.getElementById("header-searchbar");
+  }, []);
 
   const handleRadioChange = (checkedRadio) => {
     setFilterParams({
@@ -94,6 +101,12 @@ export const FilmsFilter = () => {
   }, [setFilterParams]);
 
   const debouncedHandleRangeSliderChange = getDebouncedFn(handleRangeSliderChange)
+
+  const handleSearchSubmit = useCallback((value, name) => {
+    setFilterParams({
+      [name]: value,
+    })
+  }, [setFilterParams])
 
   return <div className={"filmsFilter p-24 rounded-lg space-y-24"}>
     <Accordion allowToggle>
@@ -162,6 +175,14 @@ export const FilmsFilter = () => {
         ref={yearRangeSliderRef}
       />
     </div>
+    {!!searchbarContainerRef.current && <ErrorBoundary fallback={<p>Here should be searchbar</p>}>
+      {createPortal(<Searchbar
+        name={SEARCH_INPUT_NAME}
+        initialValue={filterParams.keyword ? filterParams.keyword : ""}
+        onSubmit={handleSearchSubmit}
+        placeholder={"Введите название фильма"}
+      />, searchbarContainerRef.current)}
+    </ErrorBoundary>}
 
     <button className={"bg-amber-400 p-16 w-100/100 rounded-lg font-bold text-lg"} onClick={handleReset}>
       Сбросить
