@@ -7,7 +7,7 @@ export const Layout = () => {
     <div className={"layout__header bg-gray-800"}>
       <Header />
     </div>
-    <main className={"layout__main grow-1 container"}>
+    <main className={"layout__main grow-1 container shrink-0"}>
       <Outlet />
     </main>
     <div className={"layout__footer bg-gray-600 text-white py-16"}>

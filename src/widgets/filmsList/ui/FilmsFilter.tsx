@@ -1,20 +1,20 @@
 import {StoreType} from "#app/providers/StoreProvider/model/store.ts";
-import {useContext, useMemo, useState} from "react";
+import {useCallback, useContext, useMemo, useRef, useState} from "react";
 import {StoreContext} from "#shared/config/storeContext.ts";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-} from "@chakra-ui/accordion"
+import {Accordion, AccordionButton, AccordionItem, AccordionPanel,} from "@chakra-ui/accordion"
 import {RadioGroup} from "#shared/ui/radioGroup/index.ts";
 import {
   getAdaptedAccordionData,
   getAdaptedData,
-  getAdaptedOrderSelectOptions, getAdaptedTypeSelectOptions
+  getAdaptedOrderSelectOptions,
+  getAdaptedTypeSelectOptions
 } from "#widgets/filmsList/lib/getAdaptedData.ts";
 import Select from "react-select";
-import {FILTER_SELECT_NAMES} from "#shared/lib/constants/index.ts";
+import {FILTER_RANGE_SLIDER_NAMES, FILTER_SELECT_NAMES, RATING_VALUES} from "#shared/lib/constants/index.ts";
+import {RangeSlider} from "#shared/ui/rangeSlider/index.ts";
+import {rangeSliderNames} from "#shared/ui/rangeSlider/model/types.ts";
+import {getDebouncedFn} from "#shared/lib/utils/index.ts";
+import {filmsRatingKeys} from "#shared/lib/types.ts";
 
 export const FilmsFilter = () => {
   const store: StoreType = useContext(StoreContext);
@@ -27,11 +27,20 @@ export const FilmsFilter = () => {
   } = store;
 
   const accordionData = useMemo(() => getAdaptedAccordionData(genres, countries), [ genres, countries ])
+
   const orderSelectOptions = useMemo(() => getAdaptedOrderSelectOptions(filterParams), [])
   const typeSelectOptions = useMemo(() => getAdaptedTypeSelectOptions(filterParams), [])
 
   const [selectedOrderOption, setSelectedOrderOption] = useState(orderSelectOptions.defaultOption);
   const [selectedTypeOption, setSelectedTypeOption] = useState(typeSelectOptions.defaultOption);
+
+  const ratingRangeSliderRef = useRef(null)
+  const ratingRangeSliderInitialValues = useMemo(() => {
+    return {
+      min: Number(filterParams[filmsRatingKeys.ratingFrom] ? filterParams[filmsRatingKeys.ratingFrom] : RATING_VALUES.min),
+      max: Number(filterParams[filmsRatingKeys.ratingTo] ? filterParams[filmsRatingKeys.ratingTo] : RATING_VALUES.max),
+    }
+  }, [filterParams])
 
   const handleRadioChange = (checkedRadio) => {
     setFilterParams({
@@ -40,20 +49,34 @@ export const FilmsFilter = () => {
     })
   }
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     clearFilterParams();
 
     setSelectedOrderOption(orderSelectOptions.resetOption);
     setSelectedTypeOption(typeSelectOptions.resetOption);
-  }
+    if(ratingRangeSliderRef.current && typeof ratingRangeSliderRef.current.reset === "function") {
+      ratingRangeSliderRef.current.reset()
+    }
+  }, [clearFilterParams, orderSelectOptions.resetOption, typeSelectOptions.resetOption]);
 
-  const handleSelectChange = (selectName, option, setValueFn) => {
+  const handleSelectChange = useCallback((selectName, option, setValueFn) => {
     setValueFn(option);
 
     setFilterParams({
       [selectName]: option.value,
     })
-  }
+  }, [setFilterParams]);
+
+  const handleRangeSliderChange = useCallback((rangeValue: Array<number>, names: rangeSliderNames) => {
+    const [ nameFrom, nameTo ] = names
+
+    setFilterParams({
+      [nameFrom]: rangeValue[0],
+      [nameTo]: rangeValue[1],
+    })
+  }, [setFilterParams]);
+
+  const debouncedHandleRangeSliderChange = getDebouncedFn(handleRangeSliderChange)
 
   return <div className={"filmsFilter p-24 rounded-lg space-y-24"}>
     <Accordion allowToggle>
@@ -99,10 +122,17 @@ export const FilmsFilter = () => {
       />
     </label>
 
-    {/*<label className={"flex flex-col gap-8"}>*/}
-    {/*  <span className={"text-white text-lg font-bold"}>Рейтинг:</span>*/}
-    {/*  <Slider defaultValue={[0, 10]} min={0} max={10} />*/}
-    {/*</label>*/}
+    <label className={"flex flex-col gap-8"}>
+      <span className={"text-white text-lg font-bold"}>Рейтинг:</span>
+      <RangeSlider
+        names={[ FILTER_RANGE_SLIDER_NAMES.rating.ratingFrom, FILTER_RANGE_SLIDER_NAMES.rating.ratingTo ]}
+        min={RATING_VALUES.min}
+        max={RATING_VALUES.max}
+        initialValue={[ratingRangeSliderInitialValues.min, ratingRangeSliderInitialValues.max]}
+        onValueChange={debouncedHandleRangeSliderChange}
+        ref={ratingRangeSliderRef}
+      />
+    </label>
 
     <button className={"bg-amber-400 p-16 w-100/100 rounded-lg font-bold text-lg"} onClick={handleReset}>
       Сбросить

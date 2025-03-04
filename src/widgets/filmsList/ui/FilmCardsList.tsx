@@ -10,7 +10,7 @@ interface FilmCardsListProps {
 export const FilmCardsList = ({ films }: FilmCardsListProps) => {
 
   if(!films || !films.length) {
-    return <p className={"text-3xl text-white"}>Результатов не найдено, попробуйте изменить параметры поиска</p>
+    return <p className={"text-3xl text-white text-center"}>Результатов не найдено, попробуйте изменить параметры поиска</p>
   }
 
   return <ul className={"flex flex-row flex-wrap gap-16 justify-between"}>

@@ -4,6 +4,7 @@
 
 .filmsList .filmsList__aside {
   position: relative;
+  max-width: 320px;
 }
 
 .filmsList .filmsList__aside .filmsFilter {

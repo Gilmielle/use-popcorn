@@ -50,3 +50,25 @@ export const getFormattedFilmLength = (filmLength: number): string => {
 
   return `${hours} ${getWordDeclination(hours, hoursWords)} ${minutes} ${getWordDeclination(minutes, minutesWords)}`
 }
+
+/**
+ * Gets a function that is executed no more than once in a specified period of time
+ * @param cb{Function} - source function
+ * @param wait{Number=} - interval of execution
+ * @return {function}
+ */
+export const getDebouncedFn = (cb, wait = 250) => {
+  let timeout;
+  return function executedFunction() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const context = this;
+    // eslint-disable-next-line prefer-rest-params
+    const args = arguments;
+    const later = function () {
+      timeout = null;
+      cb.apply(context, args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
