@@ -35,6 +35,17 @@ export enum FilmProductionStatus {
   "POST_PRODUCTION" = "POST_PRODUCTION",
 }
 
+export enum filmsRatingKeys {
+  ratingFrom = "ratingFrom",
+  ratingTo = "ratingTo",
+}
+
+export enum filmsYearKeys {
+  yearFrom = "yearFrom",
+  yearTo = "yearTo",
+}
+
+
 export interface Film {
   "kinopoiskId": number,
   "kinopoiskHDId": number | null,

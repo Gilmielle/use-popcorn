@@ -1,6 +1,6 @@
 import {routePaths} from "./routes.ts";
 import {FilmOrders, FilmTypes, FilmTypesFilter} from "#shared/api/filmsList.ts";
-import {filmsRatingKeys, filmsYearKeys} from "#shared/lib/types.ts";
+import {filmsRatingKeys, filmsYearKeys} from "#shared/api/filmsList.ts";
 
 const API_ENDPOINTS = {
   filmsList: "/films",
@@ -51,7 +51,17 @@ const FILTER_RANGE_SLIDER_NAMES = {
 
 const RATING_VALUES = {
   min: 1,
-  max: 10
+  max: 10,
+}
+
+const YEAR_VALUES = {
+  min: 2000,
+  max: new Date().getFullYear(),
+}
+
+const YEAR_MIN_MAX_VALUES = {
+  min: 1895,
+  max: 2100,
 }
 
 export {
@@ -65,4 +75,6 @@ export {
   FILTER_RANGE_SLIDER_NAMES,
   FILM_TYPE_OPTIONS,
   RATING_VALUES,
+  YEAR_VALUES,
+  YEAR_MIN_MAX_VALUES
 }

@@ -1,7 +1,7 @@
 import {ApiClient} from "#shared/lib/services/ApiClient.ts";
 import {API_ENDPOINTS} from "#shared/lib/constants/index.ts";
 import {Film, FilmOrders, FilmTypes, FilmTypesFilter} from "#shared/api/filmsList.ts";
-import {filmsRatingKeys, filmsYearKeys} from "#shared/lib/types.ts";
+import {filmsRatingKeys, filmsYearKeys} from "#shared/api/filmsList.ts";
 
 type AllFilmTypes = FilmTypes | FilmTypesFilter;
 

@@ -35,12 +35,12 @@ export const FilmsList = () => {
   } = useFilms(filterParams);
 
   useEffect(() => {
-    if(!countries.length || !genres.length) {
+/*    if(!countries.length || !genres.length) {
       getFilmsListFilter().then((resp) => {
         setCountries(resp.countries)
         setGenres(resp.genres)
       })
-    }
+    }*/
   }, [ countries, genres, setCountries, setGenres ]);
 
   useEffect(() => {

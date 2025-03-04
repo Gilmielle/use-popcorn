@@ -10,11 +10,16 @@ import {
   getAdaptedTypeSelectOptions
 } from "#widgets/filmsList/lib/getAdaptedData.ts";
 import Select from "react-select";
-import {FILTER_RANGE_SLIDER_NAMES, FILTER_SELECT_NAMES, RATING_VALUES} from "#shared/lib/constants/index.ts";
+import {
+  FILTER_RANGE_SLIDER_NAMES,
+  FILTER_SELECT_NAMES,
+  RATING_VALUES, YEAR_MIN_MAX_VALUES,
+  YEAR_VALUES
+} from "#shared/lib/constants/index.ts";
 import {RangeSlider} from "#shared/ui/rangeSlider/index.ts";
 import {rangeSliderNames} from "#shared/ui/rangeSlider/model/types.ts";
 import {getDebouncedFn} from "#shared/lib/utils/index.ts";
-import {filmsRatingKeys} from "#shared/lib/types.ts";
+import {filmsRatingKeys, filmsYearKeys} from "#shared/api/filmsList.ts";
 
 export const FilmsFilter = () => {
   const store: StoreType = useContext(StoreContext);
@@ -42,6 +47,14 @@ export const FilmsFilter = () => {
     }
   }, [filterParams])
 
+  const yearRangeSliderRef = useRef(null)
+  const yearRangeSliderInitialValues = useMemo(() => {
+    return {
+      min: Number(filterParams[filmsYearKeys.yearFrom] ? filterParams[filmsYearKeys.yearFrom] : YEAR_VALUES.min),
+      max: Number(filterParams[filmsYearKeys.yearTo] ? filterParams[filmsYearKeys.yearTo] : YEAR_VALUES.max),
+    }
+  }, [filterParams])
+
   const handleRadioChange = (checkedRadio) => {
     setFilterParams({
       [checkedRadio.name]: checkedRadio.value,
@@ -54,8 +67,12 @@ export const FilmsFilter = () => {
 
     setSelectedOrderOption(orderSelectOptions.resetOption);
     setSelectedTypeOption(typeSelectOptions.resetOption);
+
     if(ratingRangeSliderRef.current && typeof ratingRangeSliderRef.current.reset === "function") {
       ratingRangeSliderRef.current.reset()
+    }
+    if(yearRangeSliderRef.current && typeof yearRangeSliderRef.current.reset === "function") {
+      yearRangeSliderRef.current.reset()
     }
   }, [clearFilterParams, orderSelectOptions.resetOption, typeSelectOptions.resetOption]);
 
@@ -122,8 +139,8 @@ export const FilmsFilter = () => {
       />
     </label>
 
-    <label className={"flex flex-col gap-8"}>
-      <span className={"text-white text-lg font-bold"}>Рейтинг:</span>
+    <div className={"flex flex-col gap-8"}>
+      <label className={"text-white text-lg font-bold"}>Рейтинг:</label>
       <RangeSlider
         names={[ FILTER_RANGE_SLIDER_NAMES.rating.ratingFrom, FILTER_RANGE_SLIDER_NAMES.rating.ratingTo ]}
         min={RATING_VALUES.min}
@@ -132,7 +149,19 @@ export const FilmsFilter = () => {
         onValueChange={debouncedHandleRangeSliderChange}
         ref={ratingRangeSliderRef}
       />
-    </label>
+    </div>
+
+    <div className={"flex flex-col gap-8"}>
+      <label className={"text-white text-lg font-bold"}>Год:</label>
+      <RangeSlider
+        names={[ FILTER_RANGE_SLIDER_NAMES.year.yearFrom, FILTER_RANGE_SLIDER_NAMES.year.yearTo ]}
+        min={YEAR_MIN_MAX_VALUES.min}
+        max={YEAR_MIN_MAX_VALUES.max}
+        initialValue={[yearRangeSliderInitialValues.min, yearRangeSliderInitialValues.max]}
+        onValueChange={debouncedHandleRangeSliderChange}
+        ref={yearRangeSliderRef}
+      />
+    </div>
 
     <button className={"bg-amber-400 p-16 w-100/100 rounded-lg font-bold text-lg"} onClick={handleReset}>
       Сбросить

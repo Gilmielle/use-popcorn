@@ -1,7 +1,9 @@
 import { Root, Track, Range, Thumb } from "@radix-ui/react-slider";
 import "../style.css"
-import {ChangeEvent, forwardRef, useCallback, useImperativeHandle, useState} from "react";
+import {ChangeEvent, forwardRef, useCallback, useEffect, useImperativeHandle, useState} from "react";
 import {rangeSliderNames} from "../model/types.ts";
+import {getDebouncedFn} from "#shared/lib/utils/index.ts";
+import {IMaskInput} from "react-imask";
 
 interface RangeSliderProps {
   names: rangeSliderNames,
@@ -32,19 +34,22 @@ export const RangeSlider = forwardRef(({
     [min, max]
   );
 
+  useEffect(() => {
+    if (typeof onValueChange === "function") {
+      onValueChange(rangeValue, names);
+    }
+  }, [rangeValue]);
+
   const handleSliderChange = useCallback((value: Array<number>) => {
     setRangeValue(value);
-    if (typeof onValueChange === "function") {
-      onValueChange(value, names);
-    }
-  }, [onValueChange, names]);
+
+  }, [names]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>, rangePosition: string) => {
     const { target } = e;
-    let newValue = Number(target.value);
+    const newValue = Number(target.value.replaceAll(" ", ""));
 
     if (isNaN(newValue)) return;
-    newValue = Math.min(Math.max(newValue, min), max);
 
     setRangeValue(prevValue => {
       if (rangePosition === "min") {
@@ -78,17 +83,35 @@ export const RangeSlider = forwardRef(({
       <Thumb className={"rangeSlider__sliderThumb"} aria-label="Volume" />
     </Root>
     <div className={"rangeSlider__inputs flex flex-row gap-16"}>
-      <input
+      <IMaskInput
         className="basis-48/100 max-w-48/100 bg-white px-16 py-8 rounded-md"
-        type="text"
-        value={rangeValue[0]}
-        onChange={(e) => handleInputChange(e, "min")}
+        mask={Number}
+        radix="."
+        value={rangeValue[0].toString()}
+        unmask={true}
+        onBlur={(e) => handleInputChange(e, "min")}
+        placeholder={min.toLocaleString("ru-RU")}
+        padFractionalZeros={true}
+        thousandsSeparator={" "}
+        scale={0}
+        min={min}
+        max={max - 1}
+        autofix={true}
       />
-      <input
+      <IMaskInput
         className="basis-48/100 max-w-48/100 bg-white px-16 py-8 rounded-md"
-        type="text"
-        value={rangeValue[1]}
-        onChange={(e) => handleInputChange(e, "max")}
+        mask={Number}
+        radix="."
+        value={rangeValue[1].toString()}
+        unmask={true}
+        onBlur={(e) => handleInputChange(e, "max")}
+        placeholder={min.toLocaleString("ru-RU")}
+        padFractionalZeros={true}
+        thousandsSeparator={" "}
+        scale={0}
+        min={min + 1}
+        max={max}
+        autofix={true}
       />
     </div>
   </div>
