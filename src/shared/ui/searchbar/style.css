@@ -1,8 +1,21 @@
 .searchbar {
+  --searchbarMinWidth: 400px;
+  --searchbarInputBorderRadius: 40px;
+  --searchbarInputFontSize: 20px;
+  --searchbarInputPaddingInline: calc(var(--searchbarSubmitBtnSize) + 16px) calc(var(--searchbarResetBtnSize) + 16px);
   --searchbarSubmitBtnSize: 40px;
   --searchbarResetBtnSize: 32px;
+
   position: relative;
-  min-width: 400px;
+  min-width: var(--searchbarMinWidth);
+}
+
+.searchbar--isSmall {
+  --searchbarMinWidth: 100%;
+  --searchbarInputBorderRadius: 32px;
+  --searchbarInputFontSize: 16px;
+  --searchbarInputPaddingInline: 16px calc(var(--searchbarResetBtnSize) + 16px);
+  --searchbarResetBtnSize: 24px;
 }
 
 .searchbar__submitBtn {
@@ -24,10 +37,10 @@
 
 .searchbar__input {
   background-color: white;
-  border-radius: 40px;
-  font-size: 20px;
+  border-radius: var(--searchbarInputBorderRadius);
+  font-size: var(--searchbarInputFontSize);
   padding-block: 8px;
-  padding-inline: calc(var(--searchbarSubmitBtnSize) + 16px) calc(var(--searchbarResetBtnSize) + 16px);
+  padding-inline: var(--searchbarInputPaddingInline);
   border: 1px solid var(--color-violet-500);
   min-width: inherit;
   width: 100%;
@@ -50,7 +63,7 @@
   align-items: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s, color 0.3s;
   border-radius: 50%;
   background-color: #888888;
 }

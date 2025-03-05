@@ -4,22 +4,25 @@ import IconClose from "#public/icon-close.svg?react"
 import "../style.css";
 
 interface SearchbarProps {
+  extraClasses?: string,
   name: string,
   initialValue: string,
   placeholder: string,
   onSubmit?: (value: string, name: string) => void,
   onChange?: (value: string, name: string) => void,
+  isNeedSubmitBtn?: boolean,
 }
 
 export const Searchbar = forwardRef(({
+  extraClasses = "",
   name = "",
   initialValue = "",
   placeholder = "",
   onSubmit,
   onChange,
+  isNeedSubmitBtn = true,
 }: SearchbarProps, ref) => {
   const [value, setValue] = useState(initialValue)
-
 
   const handleSubmit = () => {
     if (typeof onSubmit === "function") {
@@ -44,8 +47,14 @@ export const Searchbar = forwardRef(({
 
   const handleReset = () => {
     setValue("")
-    if (typeof onSubmit === "function") {
-      onSubmit("", name)
+    if(isNeedSubmitBtn) {
+      if (typeof onSubmit === "function") {
+        onSubmit("", name)
+      }
+    } else {
+      if (typeof onChange === "function") {
+        onChange("", name)
+      }
     }
   }
 
@@ -55,12 +64,12 @@ export const Searchbar = forwardRef(({
     }
   })
 
-  return <div className={"searchbar"}>
-    <div className={"searchbar__submitBtn"}>
+  return <div className={`searchbar ${extraClasses}`}>
+    {!!isNeedSubmitBtn && <div className={"searchbar__submitBtn"}>
       <button type={"submit"} onClick={handleSubmit}>
-        <IconSearch />
+        <IconSearch/>
       </button>
-    </div>
+    </div>}
     <div className={"searchbar__inputWrapper"}>
       <input
         className={"searchbar__input"}

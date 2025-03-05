@@ -4,9 +4,8 @@ import {StoreContext} from "#shared/config/storeContext.ts";
 import {Accordion, AccordionButton, AccordionItem, AccordionPanel,} from "@chakra-ui/accordion"
 import {RadioGroup} from "#shared/ui/radioGroup/index.ts";
 import {
-  getAdaptedAccordionData,
-  getAdaptedData,
   getAdaptedOrderSelectOptions,
+  getAdaptedRadioData,
   getAdaptedTypeSelectOptions
 } from "#widgets/filmsList/lib/getAdaptedData.ts";
 import Select from "react-select";
@@ -34,7 +33,8 @@ export const FilmsFilter = () => {
     clearFilterParams,
   } = store;
   const searchbarContainerRef = useRef(document.getElementById("header-searchbar"));
-  const accordionData = useMemo(() => getAdaptedAccordionData(genres, countries), [ genres, countries ])
+  const [ filteredGenres, setFilteredGenres ] = useState(genres ?? []);
+  const [ filteredCountries, setFilteredCountries ] = useState(countries ?? []);
 
   const orderSelectOptions = useMemo(() => getAdaptedOrderSelectOptions(filterParams), [])
   const typeSelectOptions = useMemo(() => getAdaptedTypeSelectOptions(filterParams), [])
@@ -61,6 +61,14 @@ export const FilmsFilter = () => {
   useEffect(() => {
     searchbarContainerRef.current = document.getElementById("header-searchbar");
   }, []);
+
+  useEffect(() => {
+    setFilteredGenres(genres)
+  }, [genres]);
+
+  useEffect(() => {
+    setFilteredCountries(countries)
+  }, [countries]);
 
   const handleRadioChange = (checkedRadio) => {
     setFilterParams({
@@ -108,28 +116,75 @@ export const FilmsFilter = () => {
     })
   }, [setFilterParams])
 
+  const handleSearchRadios = useCallback((value, name) => {
+    const searchValue = value.trim().toLowerCase()
+    if(name === "genres") {
+      const newGenres = genres.filter((genreItem) => {
+        return genreItem.genre.toLowerCase().includes(searchValue)
+      })
+      setFilteredGenres(newGenres)
+    }
+    if (name === "countries") {
+
+      const newCountries = countries.filter((countryItem) => {
+        return countryItem.country.toLowerCase().includes(searchValue)
+      })
+      setFilteredCountries(newCountries)
+    }
+  }, [countries, genres])
+
   return <div className={"filmsFilter p-24 rounded-lg space-y-24"}>
     <Accordion allowToggle>
-      {accordionData.map((accordionItem, index) => {
-        if(!accordionItem.options.length) {
-          return null;
-        }
-        const radioGroupOptions = getAdaptedData(accordionItem.options, accordionItem.optionLabelProp)
 
-        return <AccordionItem key={index}>
-          <h2 className={"font-bold text-white text-xl"}>
-            <AccordionButton>{accordionItem.label} <span className={"chakra-accordion__icon"} /></AccordionButton>
-          </h2>
-          <AccordionPanel>
+      <AccordionItem>
+        <h2 className={"font-bold text-white text-xl"}>
+          <AccordionButton>Жанры <span className={"chakra-accordion__icon"} /></AccordionButton>
+        </h2>
+        <AccordionPanel>
+          <Searchbar
+            name={"genres"}
+            initialValue={""}
+            placeholder={"Введите жанр"}
+            onChange={handleSearchRadios}
+            extraClasses={"searchbar--isSmall"}
+            isNeedSubmitBtn={false}
+          />
+          {filteredGenres.length ?
             <RadioGroup
-              name={accordionItem.name}
-              options={radioGroupOptions}
+              name={"genres"}
+              options={getAdaptedRadioData(filteredGenres, "genre")}
               onRadioChange={handleRadioChange}
-              checkedValue={filterParams[accordionItem.name] ?? null}
-            />
-          </AccordionPanel>
-        </AccordionItem>
-      })}
+              checkedValue={filterParams.genres?.toString() ?? null}
+            /> :
+            <p>К сожалению, опции отсустствуют</p>
+          }
+        </AccordionPanel>
+      </AccordionItem>
+
+      <AccordionItem>
+        <h2 className={"font-bold text-white text-xl"}>
+          <AccordionButton>Страны <span className={"chakra-accordion__icon"} /></AccordionButton>
+        </h2>
+        <AccordionPanel>
+          <Searchbar
+            name={"countries"}
+            initialValue={""}
+            placeholder={"Введите страну"}
+            onChange={handleSearchRadios}
+            extraClasses={"searchbar--isSmall"}
+            isNeedSubmitBtn={false}
+          />
+          {filteredCountries.length ?
+            <RadioGroup
+              name={"countries"}
+              options={getAdaptedRadioData(filteredCountries, "country")}
+              onRadioChange={handleRadioChange}
+              checkedValue={filterParams.countries?.toString() ?? null}
+            /> :
+            <p>К сожалению, опции отсустствуют</p>
+          }
+        </AccordionPanel>
+      </AccordionItem>
     </Accordion>
 
     <label className={"flex flex-col gap-8"}>

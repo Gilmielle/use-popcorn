@@ -4,30 +4,13 @@ import {getFilmsListProps} from "#widgets/filmsList/api/getFilmsLit.ts";
 
 type radioDataOption = Required<Country> | Required<Genre>
 
-export const getAdaptedData = (options: Array<radioDataOption>, labelProp: string) => {
+export const getAdaptedRadioData = (options: Array<radioDataOption>, labelProp: string) => {
   return options.map((option) => {
     return {
       value: option.id,
       label: option[labelProp]
     }
   }).filter((option) => !!option.label);
-}
-
-export const getAdaptedAccordionData = (genres: Array<Required<Genre>>, countries: Array<Required<Country>>) => {
-  return [
-    {
-      label: "Жанры",
-      name: "genres",
-      optionLabelProp: "genre",
-      options: genres ?? [],
-    },
-    {
-      label: "Страны",
-      name: "countries",
-      optionLabelProp: "country",
-      options: countries ?? [],
-    },
-  ]
 }
 
 export const getAdaptedOrderSelectOptions = (filterParams: getFilmsListProps) => {

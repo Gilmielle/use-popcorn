@@ -73,3 +73,9 @@
 .filmsList .filmsList__aside .filmsFilter .chakra-accordion .chakra-accordion__button[aria-expanded="true"] .chakra-accordion__icon::after {
   transform: translate(-6px, -10px);
 }
+
+.filmsList .filmsList__aside .filmsFilter .chakra-accordion .chakra-accordion__panel {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}

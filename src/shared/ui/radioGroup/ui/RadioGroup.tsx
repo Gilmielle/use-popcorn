@@ -28,7 +28,7 @@ export const RadioGroup = ({ name, options, checkedValue, onRadioChange }: Radio
         name: name,
         value: option.value,
         label: option.label,
-        isChecked: option.value === checkedValue,
+        isChecked: option.value.toString() === checkedValue?.toString(),
       }
     })
     setRadios(adaptedOptions)
