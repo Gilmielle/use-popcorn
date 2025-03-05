@@ -3,14 +3,16 @@ import IconSearch from "#public/icon-search.svg?react"
 import IconClose from "#public/icon-close.svg?react"
 import "../style.css";
 
-interface SearchbarProps {
+export interface SearchbarProps {
   extraClasses?: string,
   name: string,
   initialValue: string,
   placeholder: string,
   onSubmit?: (value: string, name: string) => void,
   onChange?: (value: string, name: string) => void,
+  onReset?: () => void,
   isNeedSubmitBtn?: boolean,
+  isDisabled?: boolean,
 }
 
 export const Searchbar = forwardRef(({
@@ -20,7 +22,9 @@ export const Searchbar = forwardRef(({
   placeholder = "",
   onSubmit,
   onChange,
+  onReset,
   isNeedSubmitBtn = true,
+  isDisabled = false,
 }: SearchbarProps, ref) => {
   const [value, setValue] = useState(initialValue)
 
@@ -56,6 +60,9 @@ export const Searchbar = forwardRef(({
         onChange("", name)
       }
     }
+    if (typeof onReset === "function") {
+      onReset()
+    }
   }
 
   useImperativeHandle(ref,() => {
@@ -78,6 +85,7 @@ export const Searchbar = forwardRef(({
         onChange={handleChange}
         placeholder={placeholder}
         onKeyUp={handleKeyUp}
+        disabled={isDisabled}
       />
       <button
         type={"button"}

@@ -22,6 +22,7 @@ import {filmsRatingKeys, filmsYearKeys} from "#shared/api/filmsList.ts";
 import {createPortal} from "react-dom";
 import {Searchbar} from "#shared/ui/searchbar/index.ts";
 import {ErrorBoundary} from "react-error-boundary";
+import {HeaderSearch} from "#features/headerSearch/index.ts";
 
 export const FilmsFilter = () => {
   const store: StoreType = useContext(StoreContext);
@@ -231,7 +232,7 @@ export const FilmsFilter = () => {
       />
     </div>
     {!!searchbarContainerRef.current && <ErrorBoundary fallback={<p>Here should be searchbar</p>}>
-      {createPortal(<Searchbar
+      {createPortal(<HeaderSearch
         name={SEARCH_INPUT_NAME}
         initialValue={filterParams.keyword ? filterParams.keyword : ""}
         onSubmit={handleSearchSubmit}

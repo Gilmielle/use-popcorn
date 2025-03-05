@@ -49,6 +49,7 @@ export class ApiClient {
       headers,
       contentType,
     }: fetchWithGetParams,
+    signal?: AbortSignal,
   ) {
     return await this.getFormServer(
       {
@@ -58,6 +59,7 @@ export class ApiClient {
         headers,
         contentType,
       },
+      signal,
     )
   }
 
@@ -69,6 +71,7 @@ export class ApiClient {
       headers,
       contentType,
     }: fetchWithPostParams,
+    signal?: AbortSignal,
   ) {
 
     return await this.getFormServer(
@@ -80,6 +83,7 @@ export class ApiClient {
         headers,
         contentType,
       },
+      signal,
     )
   }
 
@@ -92,6 +96,7 @@ export class ApiClient {
       type = "json",
       contentType = "application/json",
     }: getFormServerParams,
+    signal?: AbortSignal
   ) {
     const requestUrl: URL = new URL(url);
     const requestHeaders = this.getHeaders(headers, contentType);
@@ -99,7 +104,8 @@ export class ApiClient {
     const requestInit = {
       method,
       body: method === "GET" ? null : JSON.stringify(body ?? {}),
-      headers: requestHeaders
+      headers: requestHeaders,
+      signal
     } as RequestInit;
 
     return await fetch(requestUrl.toString(), requestInit)

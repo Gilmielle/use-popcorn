@@ -8,12 +8,14 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --color-violet-500: oklch(0.606 0.25 292.717);
+  --color-violet-400: oklch(0.702 0.183 293.541);
   --color-violet-300: oklch(0.811 0.111 293.571);
   --color-blue-300: oklch(0.809 0.105 251.813);
   --color-blue-500: oklch(0.623 0.214 259.815);
   --color-blue-550: oklch(0.499 0.193 260.793);
   --color-gray-400: oklch(0.707 0.022 261.325);
   --color-gray-600: oklch(0.446 0.03 256.802);
+  --color-teal-400: oklch(0.777 0.152 181.912);
 }
 
 html {
