@@ -24,11 +24,12 @@ export const FilmDetailedInfo = ({ filmId }: FilmDetailedInfoProps) => {
         sequelsAndPrequels,
         similars,
       } = data;
+
       if(!details && !staff && !sequelsAndPrequels && !similars) {
         throw Error("FilmDetailedInfo: all data is empty")
       }
-      setFilmData(details)
 
+      setFilmData(details)
     })
       .catch((err) => {
         console.debug(err)
