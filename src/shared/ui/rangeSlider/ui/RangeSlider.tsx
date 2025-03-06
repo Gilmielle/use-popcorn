@@ -2,7 +2,6 @@ import { Root, Track, Range, Thumb } from "@radix-ui/react-slider";
 import "../style.css"
 import {ChangeEvent, forwardRef, useCallback, useEffect, useImperativeHandle, useState} from "react";
 import {rangeSliderNames} from "../model/types.ts";
-import {getDebouncedFn} from "#shared/lib/utils/index.ts";
 import {IMaskInput} from "react-imask";
 
 interface RangeSliderProps {
@@ -116,3 +115,5 @@ export const RangeSlider = forwardRef(({
     </div>
   </div>
 });
+
+RangeSlider.displayName = "RangeSlider"

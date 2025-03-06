@@ -1,5 +1,5 @@
 .searchbar {
-  --searchbarMinWidth: 400px;
+  --searchbarMinWidth: 500px;
   --searchbarInputBorderRadius: 40px;
   --searchbarInputFontSize: 20px;
   --searchbarInputPaddingInline: calc(var(--searchbarSubmitBtnSize) + 16px) calc(var(--searchbarResetBtnSize) + 16px);

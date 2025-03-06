@@ -1,12 +1,13 @@
-import {useRef, useState} from "react";
+import {useCallback, useRef, useState} from "react";
 import {Searchbar} from "#shared/ui/searchbar/index.ts";
 import {SearchbarProps} from "#shared/ui/searchbar/ui/Searchbar.tsx";
 import {getFilmSuggests} from "../api/getFilmSuggests.ts";
 import {getDebouncedFn, getFilmDisplayedName} from "#shared/lib/utils/index.ts";
-import {generatePath, Link} from "react-router";
+import {generatePath, Link, useNavigate} from "react-router";
 import {Film} from "#shared/api/filmsList.ts";
 import {routePaths} from "#shared/lib/constants/index.ts";
 import "../style.css"
+import {useOutsideClick} from "#shared/hooks/useOutsideClick.tsx";
 
 interface HeaderSearchProps extends SearchbarProps {
   searchbarExtraClasses?: string,
@@ -18,24 +19,28 @@ export const HeaderSearch = ({
   onChange,
   onSubmit,
   placeholder,
-  isNeedSubmitBtn,
+  isNeedSubmitBtn = true,
   extraClasses = "",
-  searchbarExtraClasses
+  searchbarExtraClasses = "",
 }: HeaderSearchProps) => {
   const [suggests, setSuggests] = useState<Array<Film>>([])
   const [isSuggestsVisible, setIsSuggestsVisible] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const searchbarRef = useRef(null)
+  const headerSearchRef = useRef(null)
   const controllerRef = useRef(new AbortController());
+  const navigate = useNavigate()
 
   const createNewAbortController = () => {
     controllerRef.current?.abort("getFilmSuggests aborted: user clicked reset button");
     controllerRef.current = new AbortController();
   };
 
+  useOutsideClick(headerSearchRef, () => setIsSuggestsVisible(false));
+
   const handleInputChange = (currentSearchbarValue, currentSearchbarName) => {
-    if (currentSearchbarValue.length) {
+    if (currentSearchbarValue.length > 2) {
       setIsLoading(true)
       setIsError(false)
       setSuggests([])
@@ -83,10 +88,32 @@ export const HeaderSearch = ({
   const handleInputSubmit = (value, name) => {
     if(typeof onSubmit === "function") {
       onSubmit(value, name)
+      setIsSuggestsVisible(false)
+      searchbarRef.current.blur()
     }
   }
 
-  return <div className={`headerSearch ${extraClasses}`}>
+  const handleInputFocus = (value) => {
+    if(value.length) {
+      setIsSuggestsVisible(true)
+    }
+  }
+
+  const getSuggestExtraParams = useCallback((suggest: Film) => {
+    const extraParams = [ suggest?.nameOriginal, suggest?.year, suggest?.countries[0]?.country ]
+      .filter((item) => !!item)
+      .join(", ");
+    return <span>{extraParams}</span>
+  }, [])
+
+  const handleSuggestionClick = (e, path) => {
+    e.stopPropagation()
+    e.preventDefault();
+    navigate(path)
+    setIsSuggestsVisible(false)
+  }
+
+  return <div className={`headerSearch ${extraClasses}`} ref={headerSearchRef}>
     <div className={"headerSearch__searchbar"}>
       <Searchbar
         name={name}
@@ -99,6 +126,7 @@ export const HeaderSearch = ({
         ref={searchbarRef}
         onReset={handleInputReset}
         isDisabled={isLoading}
+        onFocus={handleInputFocus}
       />
     </div>
     <div className={"headerSearch__suggests"}>
@@ -107,14 +135,19 @@ export const HeaderSearch = ({
         {(!isLoading && !isError && !!suggests.length) && <ul className={"headerSearch__suggestsList"}>
           {suggests.map((suggest, index) => {
             return <li key={index} className={"headerSearch__suggestsItem"}>
-              <Link to={generatePath(routePaths.filmDetailed, {filmId: suggest.kinopoiskId.toString()})}>
+              <a
+                className={"headerSearch__suggestLink"}
+                onClick={(e) => handleSuggestionClick(e, generatePath(routePaths.filmDetailed, {filmId: suggest.kinopoiskId.toString()}))}>
                 <div className={"flex flex-col text-start"}>
                   <p>
-                    <span className={"font-bold"}>{getFilmDisplayedName(suggest)}</span>, {suggest.year}
+                    <span className={"font-bold"}>{getFilmDisplayedName(suggest)}</span>
                   </p>
-                  {!!suggest.ratingKinopoisk && <p className={""}>Рейтинг: <span className={"font-bold"}>{suggest.ratingKinopoisk}</span></p>}
+                  {(!!suggest.ratingKinopoisk || suggest.year || suggest.countries.length) && <p className={""}>
+                    {!!suggest.ratingKinopoisk && <span className={"font-bold mr-4"}>{suggest.ratingKinopoisk}</span>}
+                    {getSuggestExtraParams(suggest)}
+                  </p>}
                 </div>
-              </Link>
+              </a>
             </li>
           })}
         </ul>}

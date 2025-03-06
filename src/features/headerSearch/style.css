@@ -8,6 +8,7 @@
   max-width: 100%;
   max-height: 400px;
   overflow-y: auto;
+  width: 100%;
 }
 
 .headerSearch .headerSearch__suggestsWrapper {
@@ -23,11 +24,13 @@
   row-gap: 4px;
 }
 
-.headerSearch .headerSearch__suggestsItem a {
+.headerSearch .headerSearch__suggestsItem .headerSearch__suggestLink {
+  cursor: pointer;
   display: flex;
   padding: 4px 8px;
   border-radius: 4px;
   transition: background-color 0.3s;
+  user-select: none;
 }
 
 .headerSearch .headerSearch__suggestsItem a:hover {
@@ -38,4 +41,5 @@
   width: 100%;
   font-weight: bold;
   font-size: 14px;
+  padding-block: 8px;
 }

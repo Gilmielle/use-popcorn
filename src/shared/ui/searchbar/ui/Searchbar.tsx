@@ -1,4 +1,4 @@
-import {forwardRef, useImperativeHandle, useState} from "react";
+import {forwardRef, useImperativeHandle, useRef, useState} from "react";
 import IconSearch from "#public/icon-search.svg?react"
 import IconClose from "#public/icon-close.svg?react"
 import "../style.css";
@@ -10,7 +10,9 @@ export interface SearchbarProps {
   placeholder: string,
   onSubmit?: (value: string, name: string) => void,
   onChange?: (value: string, name: string) => void,
-  onReset?: () => void,
+  onReset?: (name: string) => void,
+  onFocus?: (value: string) => void,
+  onBlur?: () => void,
   isNeedSubmitBtn?: boolean,
   isDisabled?: boolean,
 }
@@ -23,10 +25,14 @@ export const Searchbar = forwardRef(({
   onSubmit,
   onChange,
   onReset,
+  onFocus,
+  onBlur,
   isNeedSubmitBtn = true,
   isDisabled = false,
 }: SearchbarProps, ref) => {
   const [value, setValue] = useState(initialValue)
+  const searchbarRef = useRef(null)
+  const searchbarInputRef = useRef(null)
 
   const handleSubmit = () => {
     if (typeof onSubmit === "function") {
@@ -51,27 +57,32 @@ export const Searchbar = forwardRef(({
 
   const handleReset = () => {
     setValue("")
-    if(isNeedSubmitBtn) {
-      if (typeof onSubmit === "function") {
-        onSubmit("", name)
-      }
-    } else {
-      if (typeof onChange === "function") {
-        onChange("", name)
-      }
-    }
     if (typeof onReset === "function") {
-      onReset()
+      onReset(name)
+    }
+  }
+
+  const handleFocus = () => {
+    if (typeof onFocus === "function") {
+      onFocus(value)
+    }
+  }
+
+  const handleBlur = () => {
+    if (typeof onBlur === "function") {
+      onBlur()
     }
   }
 
   useImperativeHandle(ref,() => {
     return {
+      current: searchbarRef.current,
       reset: () => handleReset(),
+      blur: () => searchbarInputRef.current.blur()
     }
   })
 
-  return <div className={`searchbar ${extraClasses}`}>
+  return <div className={`searchbar ${extraClasses}`} ref={searchbarRef}>
     {!!isNeedSubmitBtn && <div className={"searchbar__submitBtn"}>
       <button type={"submit"} onClick={handleSubmit}>
         <IconSearch/>
@@ -86,6 +97,9 @@ export const Searchbar = forwardRef(({
         placeholder={placeholder}
         onKeyUp={handleKeyUp}
         disabled={isDisabled}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        ref={searchbarInputRef}
       />
       <button
         type={"button"}
@@ -97,3 +111,5 @@ export const Searchbar = forwardRef(({
     </div>
   </div>
 })
+
+Searchbar.displayName = "Searchbar"

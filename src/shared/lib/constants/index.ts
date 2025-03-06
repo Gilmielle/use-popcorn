@@ -6,6 +6,9 @@ const API_ENDPOINTS = {
   filmsList: "/films",
   filmDetails: "/films/",
   filmsListFilter: "/films/filters",
+  filmStaff: "/staff",
+  filmSimilars: (id) => `films/${id}/similars`,
+  filmSequelsAndPrequels: (id) => `films/${id}/sequels_and_prequels`,
 };
 
 const API_URL = "https://kinopoiskapiunofficial.tech/api/v2.2";

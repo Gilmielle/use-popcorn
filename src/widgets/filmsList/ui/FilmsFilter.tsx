@@ -12,17 +12,15 @@ import Select from "react-select";
 import {
   FILTER_RANGE_SLIDER_NAMES,
   FILTER_SELECT_NAMES,
-  RATING_VALUES, SEARCH_INPUT_NAME, YEAR_MIN_MAX_VALUES,
+  RATING_VALUES,
+  YEAR_MIN_MAX_VALUES,
   YEAR_VALUES
 } from "#shared/lib/constants/index.ts";
 import {RangeSlider} from "#shared/ui/rangeSlider/index.ts";
 import {rangeSliderNames} from "#shared/ui/rangeSlider/model/types.ts";
 import {getDebouncedFn} from "#shared/lib/utils/index.ts";
 import {filmsRatingKeys, filmsYearKeys} from "#shared/api/filmsList.ts";
-import {createPortal} from "react-dom";
 import {Searchbar} from "#shared/ui/searchbar/index.ts";
-import {ErrorBoundary} from "react-error-boundary";
-import {HeaderSearch} from "#features/headerSearch/index.ts";
 
 export const FilmsFilter = () => {
   const store: StoreType = useContext(StoreContext);
@@ -111,12 +109,6 @@ export const FilmsFilter = () => {
 
   const debouncedHandleRangeSliderChange = getDebouncedFn(handleRangeSliderChange)
 
-  const handleSearchSubmit = useCallback((value, name) => {
-    setFilterParams({
-      [name]: value,
-    })
-  }, [setFilterParams])
-
   const handleSearchRadios = useCallback((value, name) => {
     const searchValue = value.trim().toLowerCase()
     if(name === "genres") {
@@ -131,6 +123,15 @@ export const FilmsFilter = () => {
         return countryItem.country.toLowerCase().includes(searchValue)
       })
       setFilteredCountries(newCountries)
+    }
+  }, [countries, genres])
+
+  const handleSearchRadiosReset = useCallback((name) => {
+    if(name === "genres") {
+      setFilteredGenres(genres)
+    }
+    if (name === "countries") {
+      setFilteredCountries(countries)
     }
   }, [countries, genres])
 
@@ -172,6 +173,7 @@ export const FilmsFilter = () => {
             initialValue={""}
             placeholder={"Введите страну"}
             onChange={handleSearchRadios}
+            onReset={handleSearchRadiosReset}
             extraClasses={"searchbar--isSmall"}
             isNeedSubmitBtn={false}
           />
@@ -231,14 +233,6 @@ export const FilmsFilter = () => {
         ref={yearRangeSliderRef}
       />
     </div>
-    {!!searchbarContainerRef.current && <ErrorBoundary fallback={<p>Here should be searchbar</p>}>
-      {createPortal(<HeaderSearch
-        name={SEARCH_INPUT_NAME}
-        initialValue={filterParams.keyword ? filterParams.keyword : ""}
-        onSubmit={handleSearchSubmit}
-        placeholder={"Введите название фильма"}
-      />, searchbarContainerRef.current)}
-    </ErrorBoundary>}
 
     <button className={"bg-amber-400 p-16 w-100/100 rounded-lg font-bold text-lg"} onClick={handleReset}>
       Сбросить

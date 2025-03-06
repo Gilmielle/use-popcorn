@@ -12,7 +12,9 @@ export const Layout = () => {
     </main>
     <div className={"layout__footer bg-gray-600 text-white py-16"}>
       <footer className={"container"}>
-        Footer
+        <p className={"font-bold"}>
+          © 2025 — Yulia Tikhonova (Belekhova)
+        </p>
       </footer>
     </div>
   </div>
