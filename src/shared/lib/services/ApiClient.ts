@@ -4,6 +4,7 @@ type requestMethodsTypes = "GET" | "POST";
 
 interface fetchWithGetParams {
   url: string,
+  differentBaseUrl?: string,
   type?: string,
   headers?: Record<string, string>,
   contentType?: string
@@ -38,7 +39,10 @@ export class ApiClient {
     return url
   }
 
-  getEndpointUrl(url: string) {
+  getEndpointUrl(url: string, differentBaseUrl?: string) {
+    if (differentBaseUrl) {
+      return this.getBaseUrl(differentBaseUrl) + (url.startsWith("/") ? url.substring(1) : url);
+    }
     return this.baseUrl + (url.startsWith("/") ? url.substring(1) : url);
   }
 
@@ -48,12 +52,13 @@ export class ApiClient {
       type = "json",
       headers,
       contentType,
+      differentBaseUrl = "",
     }: fetchWithGetParams,
     signal?: AbortSignal,
   ) {
     return await this.getFormServer(
       {
-        url: this.getEndpointUrl(url),
+        url: this.getEndpointUrl(url, differentBaseUrl),
         method: "GET",
         type,
         headers,
@@ -70,13 +75,14 @@ export class ApiClient {
       type = "json",
       headers,
       contentType,
+      differentBaseUrl = "",
     }: fetchWithPostParams,
     signal?: AbortSignal,
   ) {
 
     return await this.getFormServer(
       {
-        url: this.getEndpointUrl(url),
+        url: this.getEndpointUrl(url, differentBaseUrl),
         method: "POST",
         body,
         type,

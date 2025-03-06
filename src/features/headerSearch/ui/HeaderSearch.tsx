@@ -40,7 +40,7 @@ export const HeaderSearch = ({
   useOutsideClick(headerSearchRef, () => setIsSuggestsVisible(false));
 
   const handleInputChange = (currentSearchbarValue, currentSearchbarName) => {
-    if (currentSearchbarValue.length > 2) {
+    if (currentSearchbarValue.length > 3) {
       setIsLoading(true)
       setIsError(false)
       setSuggests([])

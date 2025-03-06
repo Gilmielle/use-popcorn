@@ -12,6 +12,8 @@ const API_ENDPOINTS = {
 };
 
 const API_URL = "https://kinopoiskapiunofficial.tech/api/v2.2";
+const API_URL_V1 = "https://kinopoiskapiunofficial.tech/api/v1";
+const API_URL_V2_1 = "https://kinopoiskapiunofficial.tech/api/v2.1";
 const API_KEY = import.meta.env.VITE_API_KEY ?? "";
 
 const FILM_TYPES = {
@@ -74,6 +76,8 @@ export {
   API_ENDPOINTS,
   API_KEY,
   API_URL,
+  API_URL_V1,
+  API_URL_V2_1,
   FILM_TYPES,
   FILM_ORDER_OPTIONS,
   FILTER_SELECT_NAMES,
