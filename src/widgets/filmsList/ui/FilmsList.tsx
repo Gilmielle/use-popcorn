@@ -5,7 +5,7 @@ import {StoreType} from "#app/providers/StoreProvider/model/store.ts";
 import {Pagination} from "#shared/ui/pagination/index.ts";
 import {Loader} from "#shared/ui/loader/index.ts";
 import {Modal} from "#shared/ui/modal/index.ts";
-import {FilmOrders} from "#shared/api/filmsList.ts";
+import {FilmOrders} from "#shared/api/filmTypes.ts";
 import {getFilmsListFilter} from "../api/getFilmsListFilter.ts";
 import {useFilms} from "../lib/useFilms.ts";
 import {FilmCardsList} from "./FilmCardsList.tsx";

@@ -35,16 +35,42 @@ export enum FilmProductionStatus {
   "POST_PRODUCTION" = "POST_PRODUCTION",
 }
 
-export enum filmsRatingKeys {
+export enum FilmsRatingKeys {
   ratingFrom = "ratingFrom",
   ratingTo = "ratingTo",
 }
 
-export enum filmsYearKeys {
+export enum FilmsYearKeys {
   yearFrom = "yearFrom",
   yearTo = "yearTo",
 }
 
+export enum FilmRelationTypes {
+  SEQUEL = "SEQUEL",
+  PREQUEL = "PREQUEL",
+  REMAKE = "REMAKE",
+  UNKNOWN = "UNKNOWN",
+}
+
+export interface SimilarFilm {
+  filmId: number,
+  nameRu?: string
+  nameEn?: string,
+  nameOriginal?: string,
+  posterUrl: string
+  posterUrlPreview: string,
+  relationType: "SIMILAR",
+}
+
+export interface SequelOrPrequel {
+  filmId: number,
+  nameRu:	string,
+  nameEn:	string,
+  nameOriginal:	string,
+  posterUrl: string,
+  posterUrlPreview:	string,
+  relationType:	FilmRelationTypes,
+}
 
 export interface Film {
   "kinopoiskId": number,

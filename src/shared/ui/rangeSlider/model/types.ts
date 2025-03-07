@@ -1,3 +1,3 @@
-import {filmsRatingKeys, filmsYearKeys} from "#shared/api/filmsList.ts";
+import {FilmsRatingKeys, FilmsYearKeys} from "#shared/api/filmTypes.ts";
 
-export type rangeSliderNames = Array<filmsRatingKeys |  filmsYearKeys>
+export type rangeSliderNames = Array<FilmsRatingKeys |  FilmsYearKeys>

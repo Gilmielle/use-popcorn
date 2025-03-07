@@ -1,6 +1,6 @@
 import {navList} from "../config";
 import {NavLink, useNavigate} from "react-router";
-import {routePaths, SEARCH_INPUT_NAME} from "#shared/lib/constants/index.ts";
+import {ROUTE_PATHS, SEARCH_INPUT_NAME} from "#shared/lib/constants/index.ts";
 import {HeaderSearch} from "#features/headerSearch/index.ts";
 import {StoreType} from "#app/providers/StoreProvider/model/store.ts";
 import {useCallback, useContext} from "react";
@@ -18,7 +18,7 @@ export const Header = () => {
     setFilterParams({
       [name]: value,
     })
-    navigate(routePaths.main)
+    navigate(ROUTE_PATHS.main)
   }, [navigate, setFilterParams])
 
   return <header className={"header flex justify-between items-center container"}>

@@ -1,4 +1,4 @@
-import {Country, FilmOrders, FilmTypesFilter, Genre} from "#shared/api/filmsList.ts";
+import {Country, FilmOrders, FilmTypesFilter, Genre} from "#shared/api/filmTypes.ts";
 import {FILM_ORDER_OPTIONS, FILM_TYPE_OPTIONS} from "#shared/lib/constants/index.ts";
 import {getFilmsListProps} from "#widgets/filmsList/api/getFilmsLit.ts";
 

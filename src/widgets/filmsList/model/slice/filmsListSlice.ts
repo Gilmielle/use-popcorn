@@ -1,4 +1,4 @@
-import {Film} from "#shared/api/filmsList.ts";
+import {Film} from "#shared/api/filmTypes.ts";
 import {StateCreator} from "zustand/vanilla";
 
 export interface FilmsListSlice {

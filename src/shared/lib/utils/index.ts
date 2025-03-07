@@ -1,19 +1,21 @@
-import {Film} from "#shared/api/filmsList.ts";
 import {FixedLengthArray} from "#shared/lib/types.ts";
 
+type StringOrFalsy = string | null | undefined
 /**
  * Returns film name depending on what is present in data
- * @param props{Film}
+ * @param nameRu{StringOrFalsy}
+ * @param nameEn{StringOrFalsy}
+ * @param nameOriginal{StringOrFalsy}
  * @returns {String}
  */
-export const getFilmDisplayedName = (props: Film): string => {
+export const getFilmDisplayedName = (nameRu?:	StringOrFalsy, nameEn?:	StringOrFalsy, nameOriginal?:	StringOrFalsy): string => {
   switch (true) {
-    case !!props.nameRu:
-      return props.nameRu!;
-    case !!props.nameOriginal:
-      return props.nameOriginal!;
-    case !!props.nameEn:
-      return props.nameEn!;
+    case !!nameRu:
+      return nameRu!;
+    case !!nameOriginal:
+      return nameOriginal!;
+    case !!nameEn:
+      return nameEn!;
     default:
       return "—"
   }

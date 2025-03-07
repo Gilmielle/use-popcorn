@@ -19,7 +19,7 @@ import {
 import {RangeSlider} from "#shared/ui/rangeSlider/index.ts";
 import {rangeSliderNames} from "#shared/ui/rangeSlider/model/types.ts";
 import {getDebouncedFn} from "#shared/lib/utils/index.ts";
-import {filmsRatingKeys, filmsYearKeys} from "#shared/api/filmsList.ts";
+import {FilmsRatingKeys, FilmsYearKeys} from "#shared/api/filmTypes.ts";
 import {Searchbar} from "#shared/ui/searchbar/index.ts";
 
 export const FilmsFilter = () => {
@@ -44,16 +44,16 @@ export const FilmsFilter = () => {
   const ratingRangeSliderRef = useRef(null)
   const ratingRangeSliderInitialValues = useMemo(() => {
     return {
-      min: Number(filterParams[filmsRatingKeys.ratingFrom] ? filterParams[filmsRatingKeys.ratingFrom] : RATING_VALUES.min),
-      max: Number(filterParams[filmsRatingKeys.ratingTo] ? filterParams[filmsRatingKeys.ratingTo] : RATING_VALUES.max),
+      min: Number(filterParams[FilmsRatingKeys.ratingFrom] ? filterParams[FilmsRatingKeys.ratingFrom] : RATING_VALUES.min),
+      max: Number(filterParams[FilmsRatingKeys.ratingTo] ? filterParams[FilmsRatingKeys.ratingTo] : RATING_VALUES.max),
     }
   }, [filterParams])
 
   const yearRangeSliderRef = useRef(null)
   const yearRangeSliderInitialValues = useMemo(() => {
     return {
-      min: Number(filterParams[filmsYearKeys.yearFrom] ? filterParams[filmsYearKeys.yearFrom] : YEAR_VALUES.min),
-      max: Number(filterParams[filmsYearKeys.yearTo] ? filterParams[filmsYearKeys.yearTo] : YEAR_VALUES.max),
+      min: Number(filterParams[FilmsYearKeys.yearFrom] ? filterParams[FilmsYearKeys.yearFrom] : YEAR_VALUES.min),
+      max: Number(filterParams[FilmsYearKeys.yearTo] ? filterParams[FilmsYearKeys.yearTo] : YEAR_VALUES.max),
     }
   }, [filterParams])
 

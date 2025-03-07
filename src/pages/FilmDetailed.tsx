@@ -1,5 +1,5 @@
 import {Link, useParams} from "react-router";
-import {routePaths} from "#shared/lib/constants/index.ts";
+import {ROUTE_PATHS} from "#shared/lib/constants/index.ts";
 import IconArrowLeft from "#public/icon-arrow-left.svg?react"
 import {FilmDetailedInfo} from "#widgets/filmDetailedInfo/index.ts";
 function FilmDetailed() {
@@ -9,7 +9,7 @@ function FilmDetailed() {
   return (
     <div className={"flex flex-col gap-32 text-start"}>
       <p className={"text-bold text-white text-2xl"}>
-        <Link to={routePaths.main}>
+        <Link to={ROUTE_PATHS.main}>
           <span className={"flex flex-row gap-6 items-center"}>
             <IconArrowLeft /> Назад к списку фильмов
           </span>

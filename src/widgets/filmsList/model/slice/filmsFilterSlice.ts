@@ -1,4 +1,4 @@
-import {Country, Genre} from "#shared/api/filmsList.ts";
+import {Country, Genre} from "#shared/api/filmTypes.ts";
 import {StateCreator} from "zustand/vanilla";
 import {getFilmsListProps} from "#widgets/filmsList/api/getFilmsLit.ts";
 

@@ -3,9 +3,9 @@ import {Searchbar} from "#shared/ui/searchbar/index.ts";
 import {SearchbarProps} from "#shared/ui/searchbar/ui/Searchbar.tsx";
 import {getFilmSuggests} from "../api/getFilmSuggests.ts";
 import {getDebouncedFn, getFilmDisplayedName} from "#shared/lib/utils/index.ts";
-import {generatePath, Link, useNavigate} from "react-router";
-import {Film} from "#shared/api/filmsList.ts";
-import {routePaths} from "#shared/lib/constants/index.ts";
+import {generatePath, useNavigate} from "react-router";
+import {Film} from "#shared/api/filmTypes.ts";
+import {ROUTE_PATHS} from "#shared/lib/constants/index.ts";
 import "../style.css"
 import {useOutsideClick} from "#shared/hooks/useOutsideClick.tsx";
 
@@ -75,7 +75,7 @@ export const HeaderSearch = ({
     }
   }
 
-  const debouncedHandleInputChange = getDebouncedFn(handleInputChange)
+  const debouncedHandleInputChange = getDebouncedFn(handleInputChange, 400)
 
   const handleInputReset = () => {
     controllerRef.current.abort("getFilmSuggests aborted: user clicked reset button");
@@ -137,10 +137,10 @@ export const HeaderSearch = ({
             return <li key={index} className={"headerSearch__suggestsItem"}>
               <a
                 className={"headerSearch__suggestLink"}
-                onClick={(e) => handleSuggestionClick(e, generatePath(routePaths.filmDetailed, {filmId: suggest.kinopoiskId.toString()}))}>
+                onClick={(e) => handleSuggestionClick(e, generatePath(ROUTE_PATHS.filmDetailed, {filmId: suggest.kinopoiskId.toString()}))}>
                 <div className={"flex flex-col text-start"}>
                   <p>
-                    <span className={"font-bold"}>{getFilmDisplayedName(suggest)}</span>
+                    <span className={"font-bold"}>{getFilmDisplayedName(suggest.nameRu, suggest.nameEn, suggest.nameOriginal)}</span>
                   </p>
                   {(!!suggest.ratingKinopoisk || suggest.year || suggest.countries.length) && <p className={""}>
                     {!!suggest.ratingKinopoisk && <span className={"font-bold mr-4"}>{suggest.ratingKinopoisk}</span>}

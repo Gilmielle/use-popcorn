@@ -1,4 +1,4 @@
-import {Film} from "#shared/api/filmsList.ts";
+import {Film} from "#shared/api/filmTypes.ts";
 import {ApiClient} from "#shared/lib/services/ApiClient.ts";
 import {API_ENDPOINTS} from "#shared/lib/constants/index.ts";
 

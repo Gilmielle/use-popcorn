@@ -1,7 +1,7 @@
 import {ApiClient} from "#shared/lib/services/ApiClient.ts";
 import {API_ENDPOINTS} from "#shared/lib/constants/index.ts";
-import {Film, FilmOrders, FilmTypes, FilmTypesFilter} from "#shared/api/filmsList.ts";
-import {filmsRatingKeys, filmsYearKeys} from "#shared/api/filmsList.ts";
+import {Film, FilmOrders, FilmTypes, FilmTypesFilter} from "#shared/api/filmTypes.ts";
+import {FilmsRatingKeys, FilmsYearKeys} from "#shared/api/filmTypes.ts";
 
 type AllFilmTypes = FilmTypes | FilmTypesFilter;
 
@@ -16,10 +16,10 @@ export interface getFilmsListProps {
   genres?: number,
   order?: FilmOrders,
   type?: AllFilmTypes,
-  [filmsRatingKeys.ratingFrom]?: number,
-  [filmsRatingKeys.ratingTo]?: number,
-  [filmsYearKeys.yearFrom]?: number,
-  [filmsYearKeys.yearTo]?: number,
+  [FilmsRatingKeys.ratingFrom]?: number,
+  [FilmsRatingKeys.ratingTo]?: number,
+  [FilmsYearKeys.yearFrom]?: number,
+  [FilmsYearKeys.yearTo]?: number,
   imdbId?: string,
   keyword?: string,
   page?: number,

@@ -1,6 +1,6 @@
 import {ApiClient} from "#shared/lib/services/ApiClient.ts";
 import {API_ENDPOINTS} from "#shared/lib/constants/index.ts";
-import {Country, Genre} from "#shared/api/filmsList.ts";
+import {Country, Genre} from "#shared/api/filmTypes.ts";
 
 export interface getFilmsListFilterResp {
   genres: Array<Required<Genre>>,

@@ -1,13 +1,13 @@
-import {routePaths} from "#shared/lib/constants/index.ts";
+import {ROUTE_PATHS} from "#shared/lib/constants/index.ts";
 
 const navList = [
   {
     name: "Main",
-    href: routePaths.main,
+    href: ROUTE_PATHS.main,
   },
   {
     name: "Profile",
-    href: routePaths.profile,
+    href: ROUTE_PATHS.profile,
   },
 ];
 
