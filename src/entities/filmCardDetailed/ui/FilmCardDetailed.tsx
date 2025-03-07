@@ -59,49 +59,49 @@ export const FilmCardDetailed = ({
           </h2>
           {/* TODO: потом можно переделать на ссылки на страницу с детальными данными по персонам */}
           <dl className={"flex flex-col gap-6 text-xl"}>
-            {!!staffAdaptedData[ProfessionKeys.DIRECTOR].length && <div className={"flex flex-row gap-8"}>
+            {!!staffAdaptedData[ProfessionKeys.DIRECTOR]?.length && <div className={"flex flex-row gap-8"}>
               <dt>{PROFESSIONS[ProfessionKeys.DIRECTOR][1]}:</dt>
               <dd>{staffAdaptedData[ProfessionKeys.DIRECTOR].slice(0, 15).map(person => person.nameRu).join(", ")}</dd>
             </div>}
 
-            {!!staffAdaptedData[ProfessionKeys.WRITER].length && <div className={"flex flex-row gap-8"}>
+            {!!staffAdaptedData[ProfessionKeys.WRITER]?.length && <div className={"flex flex-row gap-8"}>
               <dt>{PROFESSIONS[ProfessionKeys.WRITER][1]}:</dt>
               <dd>{staffAdaptedData[ProfessionKeys.WRITER].slice(0, 15).map(person => person.nameRu).join(", ")}</dd>
             </div>}
 
-            {!!staffAdaptedData[ProfessionKeys.PRODUCER].length && <div className={"flex flex-row gap-8"}>
+            {!!staffAdaptedData[ProfessionKeys.PRODUCER]?.length && <div className={"flex flex-row gap-8"}>
               <dt>{PROFESSIONS[ProfessionKeys.PRODUCER][1]}:</dt>
               <dd>{staffAdaptedData[ProfessionKeys.PRODUCER].slice(0, 15).map(person => person.nameRu).join(", ")}</dd>
             </div>}
 
-            {!!staffAdaptedData[ProfessionKeys.EDITOR].length && <div className={"flex flex-row gap-8"}>
+            {!!staffAdaptedData[ProfessionKeys.EDITOR]?.length && <div className={"flex flex-row gap-8"}>
               <dt>{PROFESSIONS[ProfessionKeys.EDITOR][1]}:</dt>
               <dd>{staffAdaptedData[ProfessionKeys.EDITOR].slice(0, 15).map(person => person.nameRu).join(", ")}</dd>
             </div>}
 
-            {!!staffAdaptedData[ProfessionKeys.OPERATOR].length && <div className={"flex flex-row gap-8"}>
+            {!!staffAdaptedData[ProfessionKeys.OPERATOR]?.length && <div className={"flex flex-row gap-8"}>
               <dt>{PROFESSIONS[ProfessionKeys.OPERATOR][1]}:</dt>
               <dd>{staffAdaptedData[ProfessionKeys.OPERATOR].slice(0, 15).map(person => person.nameRu).join(", ")}</dd>
             </div>}
 
-            {!!staffAdaptedData[ProfessionKeys.COMPOSER].length && <div className={"flex flex-row gap-8"}>
+            {!!staffAdaptedData[ProfessionKeys.COMPOSER]?.length && <div className={"flex flex-row gap-8"}>
               <dt>{PROFESSIONS[ProfessionKeys.COMPOSER][1]}:</dt>
               <dd>{staffAdaptedData[ProfessionKeys.COMPOSER].slice(0, 15).map(person => person.nameRu).join(", ")}</dd>
             </div>}
 
-            {!!staffAdaptedData[ProfessionKeys.DESIGN].length && <div className={"flex flex-row gap-8"}>
+            {!!staffAdaptedData[ProfessionKeys.DESIGN]?.length && <div className={"flex flex-row gap-8"}>
               <dt>{PROFESSIONS[ProfessionKeys.DESIGN][1]}:</dt>
               <dd>{staffAdaptedData[ProfessionKeys.DESIGN].slice(0, 15).map(person => person.nameRu).join(", ")}</dd>
             </div>}
 
-            {!!staffAdaptedData[ProfessionKeys.ACTOR].length && <div className={"flex flex-row gap-8"}>
+            {!!staffAdaptedData[ProfessionKeys.ACTOR]?.length && <div className={"flex flex-row gap-8"}>
               <dt>{PROFESSIONS[ProfessionKeys.ACTOR][1]}:</dt>
               <dd>{staffAdaptedData[ProfessionKeys.ACTOR].slice(0, 15).map(person => person.nameRu).join(", ")}</dd>
             </div>}
           </dl>
         </div>
 
-        {!!sequelsAndPrequels.length && <div className={"flex flex-col"}>
+        {!!sequelsAndPrequels.length && <div className={"flex flex-col w-100/100"}>
           <h2 className={"text-4xl font-bold mb-24"}>
             Сиквелы, приквелы, ремейки
           </h2>
@@ -125,7 +125,7 @@ export const FilmCardDetailed = ({
           </div>
         </div>}
 
-        {!!similars.length && <div className={"flex flex-col mt-40"}>
+        {!!similars.length && <div className={"flex flex-col mt-80 w-100/100"}>
           <h2 className={"text-4xl font-bold mb-24"}>
             Вам так же могут понравиться
           </h2>
