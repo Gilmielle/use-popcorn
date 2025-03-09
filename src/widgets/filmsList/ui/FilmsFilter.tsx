@@ -148,6 +148,7 @@ export const FilmsFilter = () => {
             initialValue={""}
             placeholder={"Введите жанр"}
             onChange={handleSearchRadios}
+            onReset={handleSearchRadiosReset}
             extraClasses={"searchbar--isSmall"}
             isNeedSubmitBtn={false}
           />
